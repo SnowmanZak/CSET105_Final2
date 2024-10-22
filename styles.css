@@ -3,6 +3,7 @@
     margin: auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    background-repeat: no-repeat;
 }
 
 h1 {
@@ -26,6 +27,10 @@ h1 {
 
 #score-container {
     text-align: center;
+    background-image: url('https://media2.giphy.com/media/dMnnBdgWoamITEfOor/giphy.gif');
+    background-color: gray;
+    background-size: cover;
+    background-position: center;
 }
 
 #score {
