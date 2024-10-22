@@ -36,8 +36,7 @@ const quizData = [
     },
     {   //Question 8
         question: "When the Boogeyman goes to sleep, he checks his closet for Chuck Norris.",
-        options: [
-            "True", "False", "Only on Halloween", "In dreams"],
+        options: ["True", "False", "Only on Halloween", "In dreams"],
         correct: 0
     },
     {   //Question 9
