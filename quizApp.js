@@ -51,3 +51,156 @@ const quizData = [
     },
 
 ];
+let currentQuestionIndex = 0;
+let score = 0;
+let gifTimeout; // To store the timeout for hiding GIFs
+
+// Function to display the current quiz question
+function displayQuestion() {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = ""; // Clear the container before rendering
+
+    const questionObj = quizData[currentQuestionIndex];
+
+    // Create a question title
+    const questionTitle = document.createElement("h3");
+    questionTitle.textContent = questionObj.question;
+    quizContainer.appendChild(questionTitle);
+
+    // Create radio button options
+    for (let i = 0; i < questionObj.options.length; i++) {
+        const optionContainer = document.createElement("div");
+        const radioInput = document.createElement("input");
+        radioInput.type = "radio";
+        radioInput.name = "question"; // Same name for all options
+        radioInput.value = i;
+
+        const label = document.createElement("label");
+        label.textContent = questionObj.options[i];
+
+        optionContainer.appendChild(radioInput);
+        optionContainer.appendChild(label);
+        quizContainer.appendChild(optionContainer);
+    }
+
+    // Show the next button if there are more questions
+    const nextButton = document.getElementById("next-btn");
+    if (currentQuestionIndex < quizData.length - 1) {
+        nextButton.style.display = "inline-block";
+    } else {
+        nextButton.style.display = "none";
+    }
+
+    // Show submit button if it's the last question
+    const submitButton = document.getElementById("submit-btn");
+    if (currentQuestionIndex === quizData.length - 1) {
+        submitButton.style.display = "inline-block";
+    } else {
+        submitButton.style.display = "none";
+    }
+}
+
+// Function to show correct or incorrect GIF
+function showGif(isCorrect) {
+    const gifContainer = document.getElementById("gif-container");
+    gifContainer.style.display = "block"; // Show the GIF container
+
+    // Set the correct or incorrect GIF based on the answer
+    if (isCorrect) {
+        gifContainer.innerHTML = '<img src="https://media.tenor.com/Qb4QTiYvh3cAAAAM/gif.gif" alt="Correct" />';
+    } else {
+        gifContainer.innerHTML = '<img src="https://i.gifer.com/origin/4f/4fb1b29a1cde7181b092e97f4be8a83c_w200.gif" alt="Incorrect" />';
+    }
+
+    // Hide the GIF after 3 seconds
+    clearTimeout(gifTimeout);
+    gifTimeout = setTimeout(() => {
+        gifContainer.style.display = "none";
+    }, 3000); 
+}
+
+// Function to go to the next question
+function nextQuestion() {
+    const options = document.getElementsByName("question");
+    let selectedOption = null;
+
+    // Loop through radio buttons to find the selected one
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            selectedOption = options[i];
+            break;
+        }
+    }
+
+    if (!selectedOption) {
+        alert("Please select an answer before proceeding.");
+        return; // Don't proceed if no answer is selected
+    }
+
+    // Increment the score if the selected answer is correct
+    const isCorrect = parseInt(selectedOption.value) === quizData[currentQuestionIndex].correct;
+    if (isCorrect) {
+        score++;
+    }
+
+    // Show the correct or incorrect GIF
+    showGif(isCorrect);
+
+    // Move to the next question after showing the GIF for 5 seconds
+    setTimeout(() => {
+        currentQuestionIndex++;
+        displayQuestion(); // Display the next question
+    }, 5000); // Wait for 5 seconds before moving to the next question
+}
+
+// Function to submit the quiz
+function submitQuiz() {
+    const options = document.getElementsByName("question");
+    let selectedOption = null;
+
+    // Loop through radio buttons to find the selected one
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            selectedOption = options[i];
+            break;
+        }
+    }
+
+    // Check the last question's answer
+    const isCorrect = selectedOption && parseInt(selectedOption.value) === quizData[currentQuestionIndex].correct;
+    if (isCorrect) {
+        score++;
+    }
+
+    // Show the correct or incorrect GIF
+    showGif(isCorrect);
+
+    // After GIF timeout, hide the quiz and show the score
+    setTimeout(() => {
+        document.getElementById("quiz-container").style.display = "none";
+        document.getElementById("next-btn").style.display = "none";
+        document.getElementById("submit-btn").style.display = "none";
+
+        const scoreContainer = document.getElementById("score-container");
+        scoreContainer.style.display = "block";
+        document.getElementById("score").textContent = `${score}/${quizData.length}`;
+    }, 5000); // Wait for 5 seconds before showing the final score
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+    // Reset everything
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById("quiz-container").style.display = "block";
+    document.getElementById("next-btn").style.display = "inline-block";
+    document.getElementById("submit-btn").style.display = "none";
+    document.getElementById("score-container").style.display = "none";
+    document.getElementById("gif-container").style.display = "none"; // Hide GIF on restart
+
+    // Redisplay the first question
+    displayQuestion();
+}
+
+// Display the first question initially
+displayQuestion();

@@ -11,12 +11,14 @@
         <h1>Quiz App</h1>
         <div id="quiz-container"></div>
 
-        <button id="next-btn" onclick="">Next Question</button>
-        <button id="submit-btn" onclick="">Submit</button>
+        <div id="gif-container" style="display:none;"></div>
+
+        <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+        <button id="submit-btn" onclick="submitQuiz()">Submit</button>
 
         <div id="score-container" style="display:none;">
             <h2>Your Score: <span id="score"></span></h2>
-            <button onclick="">Restart Quiz</button>
+            <button onclick="restartQuiz()">Restart Quiz</button>
         </div>
     </div>
 
