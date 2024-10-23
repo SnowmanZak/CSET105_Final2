@@ -207,6 +207,10 @@ function restartQuiz() {
     document.getElementById("submit-btn").style.display = "none";
     document.getElementById("score-container").style.display = "none";
     document.getElementById("gif-container").style.display = "none"; // Hide GIF on restart
+    document.body.style.backgroundImage = "url('https://t4.ftcdn.net/jpg/03/45/88/07/360_F_345880772_zIT2mkdCzTthplO7xqaGGrMspN0jw0ll.jpg')";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundSize = "cover";
+
 
     
 
