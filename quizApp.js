@@ -150,7 +150,7 @@ function nextQuestion() {
     setTimeout(() => {
         currentQuestionIndex++;
         displayQuestion(); // Display the next question
-    }, 5000); // Wait for 5 seconds before moving to the next question
+    }, 3000);
 }
 
 // Function to submit the quiz
@@ -184,7 +184,17 @@ function submitQuiz() {
         const scoreContainer = document.getElementById("score-container");
         scoreContainer.style.display = "block";
         document.getElementById("score").textContent = `${score}/${quizData.length}`;
-    }, 5000); // Wait for 5 seconds before showing the final score
+    }, 3000); 
+        // Change the background to the GIF
+        setTimeout(function() {
+            // Change the background to the GIF
+            document.body.style.backgroundImage = "url('https://media2.giphy.com/media/dMnnBdgWoamITEfOor/giphy.gif')";
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundPosition = "center";
+        }, 4000); // 4-second delay before background change
+
+
 }
 
 // Function to restart the quiz
@@ -197,6 +207,8 @@ function restartQuiz() {
     document.getElementById("submit-btn").style.display = "none";
     document.getElementById("score-container").style.display = "none";
     document.getElementById("gif-container").style.display = "none"; // Hide GIF on restart
+
+    
 
     // Redisplay the first question
     displayQuestion();
